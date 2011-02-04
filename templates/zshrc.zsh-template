@@ -18,6 +18,10 @@ export ZSH_THEME="robbyrussell"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(git)
 
+# If using plugin github, enable these with the settings to makes use of the commands
+# export ZSH_PLUGIN_GITHUB_USERNAME= "user"
+# export ZSH_PLUGIN_GITHUB_TOKEN= "hasfromaccountsetting"
+
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
