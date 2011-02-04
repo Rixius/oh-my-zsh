@@ -22,13 +22,27 @@ ZSH_PLUGIN_GITHUB_TOKEN => located at account setting \\ Account Admin"
   
   if [[ "$1" == "new" ]] then
     github_repos_create $2 $3 $4
+  elif [[ "$1" == "fork" ]] then
+    github_repos_fork $2 $3 $4 
   else
     echo "Help commands"
   fi
   
 }
 
-
+function github_repos_fork {
+  if [[ ! -n $1 ]] || [[ ! -n $2 ]] then
+    echo "Syntax: github fork user repo[ directory]"
+  else
+    curl \
+      -F "login=$ZSH_PLUGIN_GITHUB_USERNAME"\
+      -F "token=$ZSH_PLUGIN_GITHUB_TOKEN"\
+      $ZSH_PLUGIN_GITHUB_URL/repos/fork/$1/$2
+    if [[ -n $3 ]] then
+      git clone git@github.com:$ZSH_PLUGIN_GITHUB_USERNAME/$2.git $3
+    fi
+  fi
+}
 function github_repos_create {
   if [[ ! -n $1 ]] then
     echo "Syntax: github new RepoName [description [homepage]]"
