@@ -55,7 +55,7 @@ function github_repos_create {
       -F "homepage=$3"\
       $ZSH_PLUGIN_GITHUB_URL/repos/create
     if [[ -d .git ]] then
-      git remote add git@github.com:$ZSH_PLUGIN_GITHUB_USERNAME/$1.git
+      git remote add origin git@github.com:$ZSH_PLUGIN_GITHUB_USERNAME/$1.git
     fi
   fi
 }
