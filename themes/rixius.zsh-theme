@@ -1,3 +1,4 @@
+#!/bin/zsh
 # /|/ Code by Stephen
 # /|/ "Rixius" Middleton
 # 
@@ -12,9 +13,11 @@ function prompt_char {
     echo "≥%{$reset_color%}"
 }
 function batt_charge {
+  if [[ -n $BAT_CHARGE ]]; then
     echo -n "("
     echo -n `$BAT_CHARGE -z` 2> /dev/null
     echo -n ")"
+  fi
 }
 
 RIXIUS_PRE="%{$bg[white]%}%{$fg[red]%}"
