@@ -12,19 +12,25 @@ function prompt_char {
     git branch >/dev/null 2>/dev/null && echo "±%{$reset_color%}" && return
     echo "≥%{$reset_color%}"
 }
-function batt_charge {
-  if [[ -n $BAT_CHARGE ]]; then
-    echo -n "("
-    echo -n `$BAT_CHARGE -z` 2> /dev/null
-    echo -n ")"
+function rvmUsage {
+  echo -n "$RIXIUS_PRE"
+  echo -n `rvm current`
+  echo -n "%{$reset_color%}"  
+}
+function ifLock {
+  if [[ -e newsroom.lock ]]; then
+    echo -n "%{$bg[white]%}%{$fg[red]%}"
+    echo -n "{L}"
+    echo -n "%{$reset_color%}"
   fi
 }
+
 
 RIXIUS_PRE="%{$bg[white]%}%{$fg[red]%}"
 
 PROMPT='
-%{$RIXIUS_PRE%}%n%{$reset_color%}$(batt_charge) in %{$fg_bold[green]%}$(collapse_pwd)%{$reset_color%}$(git_prompt_info)
-$(prompt_char) '
+%{$RIXIUS_PRE%}%n%{$reset_color%} in %{$fg_bold[green]%}$(collapse_pwd)%{$reset_color%}$(git_prompt_info) $(rvmUsage)
+$(ifLock)$(prompt_char) '
 RPROMPT='%{$RIXIUS_PRE%}%T%{$reset_color%}'
 
 ZSH_THEME_GIT_PROMPT_PREFIX=" on %{$fg[magenta]%}"
