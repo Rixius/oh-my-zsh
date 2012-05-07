@@ -13,9 +13,11 @@ function prompt_char {
     echo "≥%{$reset_color%}"
 }
 function rvmUsage {
-  echo -n "$RIXIUS_PRE"
-  echo -n `rvm current`
-  echo -n "%{$reset_color%}"  
+  if rvm >/dev/null 2>/dev/null; then
+    echo -n "$RIXIUS_PRE"
+    echo -n `rvm current`
+    echo -n "%{$reset_color%}"  
+  fi
 }
 function ifLock {
   if [[ -e newsroom.lock ]]; then
