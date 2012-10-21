@@ -8,6 +8,11 @@ function collapse_pwd {
     echo $(pwd | sed -e "s,^$HOME,~,")
 }
 function prompt_char {
+
+    git branch >/dev/null 2>&1 && echo -n "%{$bg[white]%}%{$fg[red]%}>%{$reset_color%}" && return
+    echo -n "%{$bg[white]%}%{$fg[red]%}$%{$reset_color%}"
+    return
+    # Keep the old version... for now.
     echo -n "%{$bg[white]%}%{$fg[red]%}"
     git branch >/dev/null 2>/dev/null && echo "±%{$reset_color%}" && return
     echo "≥%{$reset_color%}"
@@ -19,23 +24,15 @@ function rvmUsage {
     echo -n "%{$reset_color%}"  
   fi
 }
-function ifLock {
-  if [[ -e newsroom.lock ]]; then
-    echo -n "%{$bg[white]%}%{$fg[red]%}"
-    echo -n "{L}"
-    echo -n "%{$reset_color%}"
-  fi
-}
 
 
 RIXIUS_PRE="%{$bg[white]%}%{$fg[red]%}"
-
 PROMPT='
 %{$RIXIUS_PRE%}%n%{$reset_color%} in %{$fg_bold[green]%}$(collapse_pwd)%{$reset_color%}$(git_prompt_info) $(rvmUsage)
-$(ifLock)$(prompt_char) '
+$(prompt_char) '
 RPROMPT='%{$RIXIUS_PRE%}%T%{$reset_color%}'
 
-ZSH_THEME_GIT_PROMPT_PREFIX=" on %{$fg[magenta]%}"
-ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
-ZSH_THEME_GIT_PROMPT_DIRTY="%{$RIXIUS_PRE%}!%{$reset_color%}"
-ZSH_THEME_GIT_PROMPT_CLEAN="%{$RIXIUS_PRE%}√%{$reset_color%}"
+ZSH_THEME_GIT_PROMPT_PREFIX="(%{$fg[magenta]%}"
+ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%})"
+ZSH_THEME_GIT_PROMPT_DIRTY="%{$RIXIUS_PRE%}X%{$reset_color%}"
+ZSH_THEME_GIT_PROMPT_CLEAN="%{$RIXIUS_PRE%}O%{$reset_color%}"
